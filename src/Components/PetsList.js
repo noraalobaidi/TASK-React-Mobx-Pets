@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import PetItem from "./PetItem";
 import petStore from "../petStore";
 import { observer } from "mobx-react";
+import PetCreateModal from "./PetCreateModal";
+
+import { Modal, Button, Form } from "react-bootstrap";
 
 function PetsList({}) {
   // petsData
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
   // const [pets, setPets] = useState(petsData);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const petList = petStore.pets
     .filter(
@@ -18,6 +25,7 @@ function PetsList({}) {
     .map((pet) => <PetItem key={pet.id} pet={pet} />);
   return (
     <section id="doctors" class="doctor-section pt-140">
+      {/* <PetUpdateModal /> */}
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-xxl-5 col-xl-6 col-lg-7">
@@ -49,6 +57,19 @@ function PetsList({}) {
                 <option value="Dog">Dog</option>
                 <option value="Rabbit">Rabbit</option>
               </select>
+              <Button
+                class="btn btn-info"
+                style={{
+                  marginLeft: "5px",
+                  color: "#000",
+                  backgroundColor: "#0dcaf0",
+                  borderColor: "#0dcaf0",
+                }}
+                onClick={handleShow}
+              >
+                Create new pet
+              </Button>
+              <PetCreateModal show={show} handleClose={handleClose} />
             </div>
           </div>
         </div>
